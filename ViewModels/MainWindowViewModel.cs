@@ -18,10 +18,17 @@ public partial class MainWindowViewModel : ViewModelBase
     [ObservableProperty] private TranslateTransform _translateTransform = new(0, 0);
     [ObservableProperty] private Point _cursorLocation;
 
+    /*
     [ObservableProperty] private ObservableCollection<Point> _points =
     [
         new(75, 0), new(90, 45), new(150, 45), new(100, 75), new(120, 120), new(75, 90), new(30, 120), new(50, 75),
         new(0, 45), new(60, 45)
+    ];
+    */
+
+    [ObservableProperty] private ObservableCollection<Point> _points =
+    [
+        new(50, 85), new(20, 13), new(50, 75)
     ];
 
     [RelayCommand]
@@ -29,9 +36,13 @@ public partial class MainWindowViewModel : ViewModelBase
     {
         var maxX = Points.Max(p => p.X);
         var maxY = Points.Max(p => p.Y);
-        var scale = Math.Min(CanvasWidth, CanvasHeight) / Math.Min(maxX, maxY) / 1.05;
+        var minX = Points.Min(p => p.X);
+        var minY = Points.Min(p => p.Y);
+        var width = maxX + (maxX - (maxX - minX));
+        var height = maxY + (maxY - (maxY - minY));
+        var scale = Math.Min(CanvasWidth, CanvasHeight) / Math.Min(width, height) / 1.2;
         ScaleTransform = new ScaleTransform(scale, scale);
-        TranslateTransform = new TranslateTransform((CanvasWidth * scale - maxX * scale) / 2,
-            (CanvasHeight * scale - maxY * scale) / 2);
+        TranslateTransform = new TranslateTransform((CanvasWidth / 2 - width / 2) * scale,
+            (CanvasHeight / 2 - height / 2) * scale);
     }
 }
