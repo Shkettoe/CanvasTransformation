@@ -1,0 +1,34 @@
+﻿<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="using:AvaloniaApplication1.Controls">
+    <Design.PreviewWith>
+        <Border>
+            <controls:Panvas ClipToBounds="True" Width="800" Height="400">
+                <Rectangle Width="40" Height="40" Fill="Red" />
+                <Polygon Points="40,12, 20,15, 25,50" Fill="Aquamarine" />
+            </controls:Panvas>
+        </Border>
+    </Design.PreviewWith>
+    <Style Selector="controls|Panvas">
+        <!-- Set Defaults -->
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Panel Background="{TemplateBinding Background}">
+                    <Canvas>
+                        <Canvas.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform
+                                    ScaleX="{Binding CanvasScaleX, RelativeSource={RelativeSource TemplatedParent}}"
+                                    ScaleY="{Binding CanvasScaleY, RelativeSource={RelativeSource TemplatedParent}}" />
+                                <TranslateTransform
+                                    X="{Binding CanvasTranslateX, RelativeSource={RelativeSource TemplatedParent}}"
+                                    Y="{Binding CanvasTranslateY, RelativeSource={RelativeSource TemplatedParent}}" />
+                            </TransformGroup>
+                        </Canvas.RenderTransform>
+                        <ItemsPresenter ItemsPanel="{TemplateBinding ItemsPanel}" />
+                    </Canvas>
+                </Panel>
+            </ControlTemplate>
+        </Setter>
+    </Style>
+</Styles>

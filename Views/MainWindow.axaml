@@ -1,9 +1,11 @@
 <Window xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:vm="using:AvaloniaApplication1.ViewModels"
+        xmlns:v="using:AvaloniaApplication1.Views"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        xmlns:controls="clr-namespace:AvaloniaApplication1.Controls"
+        mc:Ignorable="d"
         x:Class="AvaloniaApplication1.Views.MainWindow"
         x:DataType="vm:MainWindowViewModel"
         Icon="/Assets/avalonia-logo.ico"
@@ -15,42 +17,17 @@
         <vm:MainWindowViewModel />
     </Design.DataContext>
 
-    <Grid Margin="20" ColumnSpacing="12" ColumnDefinitions="Auto, *">
-        <StackPanel Spacing="12">
-            <Label>Size</Label>
-            <TextBox Text="{Binding CanvasHeight}" />
-            <TextBox IsReadOnly="True" Text="{Binding CanvasWidth}" />
-            <Label>Panning</Label>
-            <TextBox Text="{Binding TranslateTransform.X}" />
-            <TextBox Text="{Binding TranslateTransform.Y}" />
-            <Label>Scale</Label>
-            <TextBox Text="{Binding ScaleTransform.ScaleX}" />
-            <TextBox Text="{Binding ScaleTransform.ScaleY}" />
-            <Label>Cursor Location</Label>
-            <TextBox IsReadOnly="True" Text="{Binding CursorLocation.X}" />
-            <TextBox IsReadOnly="True" Text="{Binding CursorLocation.Y}" />
-            <Button Command="{Binding CenterPolygonCommand}">Center Polygon</Button>
-        </StackPanel>
-        <Panel
-            Width="{Binding CanvasWidth}"
-            Height="{Binding CanvasHeight}"
-            ClipToBounds="True"
-            PointerMoved="InputElement_OnPointerMoved"
-            Background="White"
-            Grid.Column="1">
-            <Canvas>
-                <Canvas.RenderTransform>
-                    <TransformGroup>
-                        <ScaleTransform
-                            ScaleX="{Binding ScaleTransform.ScaleX}"
-                            ScaleY="{Binding ScaleTransform.ScaleY}" />
-                        <TranslateTransform
-                            X="{Binding TranslateTransform.X}"
-                            Y="{Binding TranslateTransform.Y}" />
-                    </TransformGroup>
-                </Canvas.RenderTransform>
-                <Polygon Points="{Binding Points}" Stroke="DarkBlue" StrokeThickness="1" Fill="LightBlue" />
-            </Canvas>
-        </Panel>
-    </Grid>
+
+    <TabControl>
+        <TabItem Header="Reusable Control">
+            <controls:Panvas Background="White" Width="600" Height="300" ClipToBounds="True">
+                <Rectangle Width="40" Height="40" Fill="Red" />
+                <Polygon Points="{Binding Triangle}" Fill="Aquamarine" />
+                <Polygon Points="{Binding Points}" Stroke="DarkBlue" StrokeThickness=".05" Fill="CornflowerBlue" />
+            </controls:Panvas>
+        </TabItem>
+        <TabItem Header="Canvas Laboratory">
+            <v:PanningLabView DataContext="{Binding PanningLabViewModel}"/>
+        </TabItem>
+    </TabControl>
 </Window>

@@ -1,0 +1,51 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:AvaloniaApplication1.ViewModels"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="AvaloniaApplication1.Views.PanningLabView"
+             x:DataType="vm:PanningLabViewModel">
+  <Grid Margin="20" ColumnSpacing="12" ColumnDefinitions="Auto, *">
+        
+        <StackPanel Spacing="12">
+            <Label>Size</Label>
+            <TextBox Text="{Binding CanvasHeight}" />
+            <TextBox IsReadOnly="True" Text="{Binding CanvasWidth}" />
+            <Label>Panning</Label>
+            <TextBox Text="{Binding TranslateTransform.X}" />
+            <TextBox Text="{Binding TranslateTransform.Y}" />
+            <Label>Scale</Label>
+            <TextBox Text="{Binding ScaleTransform.ScaleX}" />
+            <TextBox Text="{Binding ScaleTransform.ScaleY}" />
+            <Label>Cursor Location</Label>
+            <TextBox IsReadOnly="True" Text="{Binding CursorLocation.X}" />
+            <TextBox IsReadOnly="True" Text="{Binding CursorLocation.Y}" />
+            <Button Command="{Binding CenterPolygonCommand}">Center Polygon</Button>
+        </StackPanel>
+        <Panel
+            Width="{Binding CanvasWidth}"
+            Height="{Binding CanvasHeight}"
+            ClipToBounds="True"
+            PointerPressed="CanvasPanel_OnPointerPressed"
+            PointerMoved="CanvasPanel_OnPointerMoved"
+            PointerReleased="CanvasPanel_OnPointerReleased"
+            PointerWheelChanged="CanvasPanel_OnPointerWheelChanged"
+            Background="White"
+            Grid.Column="1">
+            <Canvas>
+                <Canvas.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform
+                            ScaleX="{Binding ScaleTransform.ScaleX}"
+                            ScaleY="{Binding ScaleTransform.ScaleY}" />
+                        <TranslateTransform
+                            X="{Binding TranslateTransform.X}"
+                            Y="{Binding TranslateTransform.Y}" />
+                    </TransformGroup>
+                </Canvas.RenderTransform>
+                <Polygon Points="{Binding Points}" Stroke="DarkBlue" StrokeThickness=".05" Fill="LightBlue" />
+            </Canvas>
+        </Panel>
+    </Grid>
+</UserControl>
